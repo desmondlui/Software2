@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Simple Search Google For",
+    "version": "1.2",
+    "description": "Add Google search to selected text context menu.",
+    "developer": {
+        "name": "Aaron Papp",
+        "url": "https://github.com/Aaron-P/SimpleSearchGoogleFor"
+    },
+    "icons": {
+        "24": "icon.svg",
+        "32": "icon.svg",
+        "48": "icon.svg",
+        "64": "icon.svg",
+        "96": "icon.svg"
+    },
+    "applications": {
+        "gecko": {
+            "strict_min_version": "57.0"
+        }
+    },
+    "permissions": [
+        "browserSettings",
+        "menus"
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    }
+}
