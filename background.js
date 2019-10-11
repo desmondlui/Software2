@@ -38,7 +38,6 @@
     });
 
 
-
     browser.menus.create({
         id: "search-youtube",
         title: "Search &Youtube for \"%s\"",
@@ -56,6 +55,31 @@
         }
 
         let url = new URL("https://www.youtube.com/search");
+        url.searchParams.set("q", info.selectionText.trim());
+
+        await browser.tabs.create({
+            index: index,
+            url: url.href
+        });
+    });
+
+    browser.menus.create({
+        id: "search-duckduck",
+        title: "Search &Duckduckgo for \"%s\"",
+        contexts: ["selection"]
+    });
+
+    browser.menus.onClicked.addListener(async (info, tab) => {
+        if (info.menuItemId !== "search-duckduck" || !info.selectionText)
+            return;
+
+        let index;
+        let newTabPosition = await browser.browserSettings.newTabPosition.get({});
+        if (newTabPosition.value !== "atEnd") {
+            index = tab.index + 1;
+        }
+
+        let url = new URL("https://www.duckduckgo.com/search");
         url.searchParams.set("q", info.selectionText.trim());
 
         await browser.tabs.create({
