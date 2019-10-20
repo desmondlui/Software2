@@ -88,4 +88,30 @@
         });
     });
 
+    
+    browser.menus.create({
+        id: "search-facebook",
+        title: "Search &Facebook for \"%s\"",
+        contexts: ["selection"]
+    });
+
+    browser.menus.onClicked.addListener(async (info, tab) => {
+        if (info.menuItemId !== "search-facebook" || !info.selectionText)
+            return;
+
+        let index;
+        let newTabPosition = await browser.browserSettings.newTabPosition.get({});
+        if (newTabPosition.value !== "atEnd") {
+            index = tab.index + 1;
+        }
+
+        let url = new URL("https://www.facebook.com/search");
+        url.searchParams.set("q", info.selectionText.trim());
+
+        await browser.tabs.create({
+            index: index,
+            url: url.href
+        });
+    });
+
 }());
